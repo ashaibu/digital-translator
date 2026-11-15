@@ -14,3 +14,9 @@ def verify_pin(entered_pin, correct_pin, attempts=0):
         return False, True, attempts
 
     return False, False, attempts
+
+
+def check_balance(account_balance, withdrawal_amount):
+    if account_balance >= withdrawal_amount:
+        return True
+    return False

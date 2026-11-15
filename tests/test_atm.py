@@ -2,6 +2,7 @@ import unittest
 
 from digital_translator.atm import validate_card
 from digital_translator.atm import validate_card, verify_pin
+from digital_translator.atm import validate_card, verify_pin, check_balance
 
 
 class TestATM(unittest.TestCase):
@@ -21,7 +22,14 @@ class TestATM(unittest.TestCase):
 
     def test_blocks_card_after_third_wrong_pin(self):
         result = verify_pin("5678", "1234", attempts=2)
-        self.assertEqual(result, (False, True, 3))    
+        self.assertEqual(result, (False, True, 3)) 
+
+
+    def test_accepts_sufficient_balance(self):
+        self.assertTrue(check_balance(50000, 20000))
+
+    def test_rejects_insufficient_balance(self):
+        self.assertFalse(check_balance(10000, 25000))   
 
 if __name__ == "__main__":
     unittest.main()
