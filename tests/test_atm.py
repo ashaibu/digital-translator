@@ -11,13 +11,17 @@ class TestATM(unittest.TestCase):
 
     def test_rejects_unreadable_card(self):
         self.assertFalse(validate_card(False))
-
     def test_accepts_correct_pin(self):
-        self.assertTrue(verify_pin("1234", "1234"))
+        result = verify_pin("1234", "1234")
+        self.assertEqual(result, (True, False, 0))
 
-    def test_rejects_incorrect_pin(self):
-        self.assertFalse(verify_pin("5678", "1234"))
+    def test_allows_retry_after_wrong_pin(self):
+        result = verify_pin("5678", "1234", attempts=0)
+        self.assertEqual(result, (False, False, 1))
 
+    def test_blocks_card_after_third_wrong_pin(self):
+        result = verify_pin("5678", "1234", attempts=2)
+        self.assertEqual(result, (False, True, 3))    
 
 if __name__ == "__main__":
     unittest.main()
