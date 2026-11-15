@@ -26,3 +26,12 @@ def check_atm_cash(atm_cash, withdrawal_amount):
     if atm_cash >= withdrawal_amount:
         return True
     return False
+
+
+def withdraw_cash(account_balance, atm_cash, withdrawal_amount):
+    if check_balance(account_balance, withdrawal_amount) and check_atm_cash(atm_cash, withdrawal_amount):
+        account_balance = account_balance - withdrawal_amount
+        atm_cash = atm_cash - withdrawal_amount
+        return True, account_balance, atm_cash
+
+    return False, account_balance, atm_cash

@@ -4,6 +4,7 @@ from digital_translator.atm import validate_card
 from digital_translator.atm import validate_card, verify_pin
 from digital_translator.atm import validate_card, verify_pin, check_balance
 from digital_translator.atm import validate_card, verify_pin, check_balance, check_atm_cash
+from digital_translator.atm import validate_card, verify_pin, check_balance, check_atm_cash, withdraw_cash
 
 
 class TestATM(unittest.TestCase):
@@ -38,6 +39,19 @@ class TestATM(unittest.TestCase):
 
     def test_rejects_insufficient_atm_cash(self):
         self.assertFalse(check_atm_cash(10000, 25000))
+
+
+    def test_successful_withdrawal(self):
+        result = withdraw_cash(100000, 50000, 20000)
+        self.assertEqual(result, (True, 80000, 30000))
+
+    def test_rejects_insufficient_account_balance(self):
+        result = withdraw_cash(10000, 50000, 20000)
+        self.assertEqual(result, (False, 10000, 50000))
+
+    def test_rejects_withdrawal_when_atm_cash_is_insufficient(self):
+        result = withdraw_cash(100000, 10000, 20000)
+        self.assertEqual(result, (False, 100000, 10000))
 
 if __name__ == "__main__":
     unittest.main()
