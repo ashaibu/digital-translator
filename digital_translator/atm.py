@@ -37,9 +37,16 @@ def withdraw_cash(account_balance, atm_cash, withdrawal_amount):
     return False, account_balance, atm_cash
 
 
-def handle_dispensing_result(account_balance_after_debit, withdrawal_amount, cash_dispensed):
+def handle_dispensing_result(
+    account_balance_after_debit,
+    atm_cash_after_debit,
+    withdrawal_amount,
+    cash_dispensed
+):
     if not cash_dispensed:
-        account_balance_after_debit = account_balance_after_debit + withdrawal_amount
-        return False, account_balance_after_debit
+        account_balance_after_debit += withdrawal_amount
+        atm_cash_after_debit += withdrawal_amount
 
-    return True, account_balance_after_debit
+        return False, account_balance_after_debit, atm_cash_after_debit
+
+    return True, account_balance_after_debit, atm_cash_after_debit
