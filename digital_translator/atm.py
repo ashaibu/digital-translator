@@ -1,3 +1,4 @@
+
 def validate_card(card_readable):
     if card_readable:
         return True
@@ -50,3 +51,58 @@ def handle_dispensing_result(
         return False, account_balance_after_debit, atm_cash_after_debit
 
     return True, account_balance_after_debit, atm_cash_after_debit
+
+
+def process_withdrawal(
+    card_readable,
+    pin_attempts,
+    correct_pin,
+    account_balance,
+    atm_cash,
+    withdrawal_amount,
+    cash_dispensed
+):
+    if not validate_card(card_readable):
+        return "Card unreadable. Transaction stopped."
+
+    attempts = 0
+    pin_correct = False
+
+    for entered_pin in pin_attempts:
+        pin_correct, card_blocked, attempts = verify_pin(
+            entered_pin, correct_pin, attempts
+        )
+
+        if pin_correct:
+            break
+
+        if card_blocked:
+            return "Card blocked. Transaction stopped."
+
+    if not pin_correct:
+        return "Incorrect PIN. Transaction stopped."
+
+    if not check_balance(account_balance, withdrawal_amount):
+        return "Insufficient account balance."
+
+    if not check_atm_cash(atm_cash, withdrawal_amount):
+        return "Insufficient ATM cash."
+
+    success, account_balance, atm_cash = withdraw_cash(
+        account_balance, atm_cash, withdrawal_amount
+    )
+
+    if not success:
+        return "Withdrawal failed."
+
+    success, account_balance, atm_cash = handle_dispensing_result(
+        account_balance,
+        atm_cash,
+        withdrawal_amount,
+        cash_dispensed
+    )
+
+    if not success:
+        return "Cash not dispensed. Balances restored."
+
+    return "Withdrawal successful."

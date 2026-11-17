@@ -8,6 +8,7 @@ from digital_translator.atm import (
     check_atm_cash,
     withdraw_cash,
     handle_dispensing_result,
+    process_withdrawal,
 )
 
 
@@ -64,5 +65,20 @@ class TestATM(unittest.TestCase):
         self.assertEqual(result, (True, 80000, 30000))
 
 
+    def test_complete_successful_withdrawal(self):
+        result = process_withdrawal(
+            True,
+            ["1234"],
+            "1234",
+            100000,
+            50000,
+            20000,
+            True
+        )
+
+        self.assertEqual(result, "Withdrawal successful.")
+
 if __name__ == "__main__":
     unittest.main()
+
+
