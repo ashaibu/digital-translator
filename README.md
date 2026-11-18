@@ -1,8 +1,33 @@
-# Py-SECTION 1 MISSION PROJECT — THE DIGITAL TRANSLATOR
+# DIGITAL TRANSLATOR
 
-Mission: mission-03
+Mission: mission-03  
 Squad: Solo 287
 
-This repository was created for the Squad mission workspace.
+## Project Overview
+This project demonstrates how computers represent real-world information and process it using instructions and algorithms.
 
-Use this repository for the team's implementation. Commit and push all meaningful work to Gitea, then submit the Mission for inspection from TalentNation when the Squad is ready.
+## Project Tiers
+1. Breakfast Planner: Converts vague requests into clear instructions.
+2. ATM Algorithm: Validates cards and PINs, checks balances and simulates withdrawals.
+3. Calculator: Performs addition, subtraction, multiplication and division.
+4. Data Translator: Identifies integer, string, float and Boolean data types.
+5. Online Store: Validates orders, calculates totals, stores orders in JSON and displays confirmations.
+
+## Project Structure
+- digital_translator/: application code.
+- tests/: automated tests.
+- data/: order storage.
+
+## Requirements
+Python 3.12 or compatible. Python standard library only.
+
+## Running Tests
+Run from the project root:
+
+python3 -m unittest discover -s tests -v
+
+## Test Results
+52 automated tests covering all five tiers.
+
+## Project Scope
+The ATM and online store are educational simulations, not real banking or payment systems.
